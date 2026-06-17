@@ -1,0 +1,107 @@
+<svg viewBox="0 0 1000 620" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <rect width="1000" height="620" fill="#FAFAFA"/>
+
+  <!-- Titulo -->
+  <text x="500" y="40" text-anchor="middle" font-size="22" font-weight="600" fill="#1A1A1A">Arquitectura del Sistema End-to-End</text>
+  <text x="500" y="62" text-anchor="middle" font-size="13" fill="#6B7280">Accidentes de Trafico Espana 2024 - SCY1101 EP3</text>
+
+  <!-- ===== CAPA 1: FUENTES ===== -->
+  <text x="60" y="110" font-size="13" font-weight="600" fill="#2C5F8A" letter-spacing="1">FUENTES DE DATOS</text>
+
+  <!-- Fuente 1: CSV -->
+  <rect x="60" y="125" width="200" height="80" rx="6" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+  <text x="160" y="152" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A1A">Fuente 1 - CSV</text>
+  <text x="160" y="172" text-anchor="middle" font-size="11" fill="#6B7280">accidentes_limpios.csv</text>
+  <text x="160" y="190" text-anchor="middle" font-size="11" fill="#6B7280">101.995 registros</text>
+
+  <!-- Fuente 2: API -->
+  <rect x="60" y="225" width="200" height="80" rx="6" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+  <text x="160" y="252" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A1A">Fuente 2 - API REST</text>
+  <text x="160" y="272" text-anchor="middle" font-size="11" fill="#6B7280">Open-Meteo Archive</text>
+  <text x="160" y="290" text-anchor="middle" font-size="11" fill="#6B7280">Datos meteorologicos</text>
+
+  <!-- Fuente 3: SQLite -->
+  <rect x="60" y="325" width="200" height="80" rx="6" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+  <text x="160" y="352" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A1A">Fuente 3 - SQLite</text>
+  <text x="160" y="372" text-anchor="middle" font-size="11" fill="#6B7280">accidentes_ep3.db</text>
+  <text x="160" y="390" text-anchor="middle" font-size="11" fill="#6B7280">Almacenamiento final</text>
+
+  <!-- ===== CAPA 2: ETL ===== -->
+  <text x="380" y="110" font-size="13" font-weight="600" fill="#2C5F8A" letter-spacing="1">PIPELINE ETL</text>
+  <rect x="380" y="125" width="220" height="280" rx="6" fill="#FFFFFF" stroke="#2C5F8A" stroke-width="2"/>
+  <text x="490" y="155" text-anchor="middle" font-size="14" font-weight="600" fill="#1A1A1A">pipeline.py</text>
+
+  <rect x="400" y="170" width="180" height="42" rx="4" fill="#F1F5F9" stroke="#E5E7EB"/>
+  <text x="490" y="187" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A">extract_csv.py</text>
+  <text x="490" y="202" text-anchor="middle" font-size="10" fill="#6B7280">Extrae + transforma</text>
+
+  <rect x="400" y="220" width="180" height="42" rx="4" fill="#F1F5F9" stroke="#E5E7EB"/>
+  <text x="490" y="237" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A">extract_api.py</text>
+  <text x="490" y="252" text-anchor="middle" font-size="10" fill="#6B7280">Consume API</text>
+
+  <rect x="400" y="270" width="180" height="42" rx="4" fill="#F1F5F9" stroke="#E5E7EB"/>
+  <text x="490" y="287" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A">validate.py</text>
+  <text x="490" y="302" text-anchor="middle" font-size="10" fill="#6B7280">Valida esquemas</text>
+
+  <rect x="400" y="320" width="180" height="42" rx="4" fill="#F1F5F9" stroke="#E5E7EB"/>
+  <text x="490" y="337" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1A1A">load_db.py</text>
+  <text x="490" y="352" text-anchor="middle" font-size="10" fill="#6B7280">Carga en SQLite</text>
+
+  <!-- ===== CAPA 3: API ===== -->
+  <text x="720" y="110" font-size="13" font-weight="600" fill="#2C5F8A" letter-spacing="1">SERVICIOS</text>
+
+  <!-- API -->
+  <rect x="720" y="125" width="220" height="120" rx="6" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+  <text x="830" y="152" text-anchor="middle" font-size="14" font-weight="600" fill="#1A1A1A">API RESTful</text>
+  <text x="830" y="172" text-anchor="middle" font-size="11" fill="#6B7280">FastAPI - main.py</text>
+  <text x="830" y="195" text-anchor="middle" font-size="11" fill="#6B7280">9 endpoints</text>
+  <text x="830" y="213" text-anchor="middle" font-size="11" fill="#6B7280">Documentacion /docs</text>
+  <text x="830" y="231" text-anchor="middle" font-size="11" fill="#2C5F8A">localhost:8000</text>
+
+  <!-- Dashboard -->
+  <rect x="720" y="265" width="220" height="140" rx="6" fill="#FFFFFF" stroke="#2C5F8A" stroke-width="2"/>
+  <text x="830" y="292" text-anchor="middle" font-size="14" font-weight="600" fill="#1A1A1A">Dashboard</text>
+  <text x="830" y="312" text-anchor="middle" font-size="11" fill="#6B7280">Plotly Dash - app.py</text>
+  <text x="830" y="335" text-anchor="middle" font-size="11" fill="#6B7280">Vista Ejecutiva</text>
+  <text x="830" y="353" text-anchor="middle" font-size="11" fill="#6B7280">Vista Tecnica</text>
+  <text x="830" y="371" text-anchor="middle" font-size="11" fill="#6B7280">Vista Operativa</text>
+  <text x="830" y="391" text-anchor="middle" font-size="11" fill="#2C5F8A">localhost:8050</text>
+
+  <!-- ===== FLECHAS ===== -->
+  <!-- Fuentes -> ETL -->
+  <line x1="260" y1="165" x2="380" y2="220" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="260" y1="265" x2="380" y2="250" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="260" y1="365" x2="380" y2="300" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ETL -> API -->
+  <line x1="600" y1="200" x2="720" y2="185" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- ETL -> Dashboard -->
+  <line x1="600" y1="320" x2="720" y2="330" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- API -> Dashboard -->
+  <line x1="830" y1="245" x2="830" y2="265" stroke="#2C5F8A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ===== DOCKER ENVOLVENTE ===== -->
+  <rect x="45" y="445" width="910" height="120" rx="8" fill="none" stroke="#2C5F8A" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="65" y="470" font-size="13" font-weight="600" fill="#2C5F8A" letter-spacing="1">CONTAINERIZACION - DOCKER</text>
+
+  <rect x="80" y="485" width="240" height="60" rx="6" fill="#FFFFFF" stroke="#E5E7EB"/>
+  <text x="200" y="510" text-anchor="middle" font-size="12" font-weight="600" fill="#1A1A1A">Dockerfile.etl</text>
+  <text x="200" y="528" text-anchor="middle" font-size="10" fill="#6B7280">Contenedor del pipeline</text>
+
+  <rect x="380" y="485" width="240" height="60" rx="6" fill="#FFFFFF" stroke="#E5E7EB"/>
+  <text x="500" y="510" text-anchor="middle" font-size="12" font-weight="600" fill="#1A1A1A">Dockerfile.api</text>
+  <text x="500" y="528" text-anchor="middle" font-size="10" fill="#6B7280">Contenedor de la API</text>
+
+  <rect x="680" y="485" width="240" height="60" rx="6" fill="#FFFFFF" stroke="#E5E7EB"/>
+  <text x="800" y="510" text-anchor="middle" font-size="12" font-weight="600" fill="#1A1A1A">Dockerfile.dashboard</text>
+  <text x="800" y="528" text-anchor="middle" font-size="10" fill="#6B7280">Contenedor del dashboard</text>
+
+  <text x="500" y="595" text-anchor="middle" font-size="12" fill="#6B7280">Los 3 servicios se orquestan con docker-compose up --build</text>
+
+  <!-- Marker -->
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#94A3B8"/>
+    </marker>
+  </defs>
+</svg>

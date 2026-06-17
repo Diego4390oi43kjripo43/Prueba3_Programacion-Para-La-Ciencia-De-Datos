@@ -1,0 +1,26 @@
+# docker/Dockerfile.dashboard
+# Servicio Dashboard — Plotly Dash multiaudiencia
+# SCY1101 EP3 | Accidentes de Tráfico España 2024
+
+FROM python:3.11-slim
+
+LABEL maintainer="SCY1101-EP3"
+LABEL description="Dashboard Plotly Dash: Vista Ejecutiva, Técnica y Operativa"
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY dashboards/ ./dashboards/
+COPY etl/        ./etl/
+
+RUN mkdir -p /data
+
+ENV SQLITE_PATH=/data/accidentes_ep3.db
+ENV CSV_PATH=/data/accidentes_limpios.csv
+ENV DASH_PORT=8050
+
+EXPOSE 8050
+
+CMD ["python", "dashboards/app.py"]

@@ -1,0 +1,82 @@
+version: '3.9'
+
+# docker-compose.yml — Orquestación completa del sistema
+# SCY1101 EP3 | Accidentes de Tráfico España 2024
+# Servicios: etl | api | dashboard
+#
+# Uso:
+#   1. Copiar accidentes_limpios.csv en ./data/
+#   2. docker-compose up --build
+#   3. Dashboard: http://localhost:8050
+#   4. API docs:  http://localhost:8000/docs
+
+services:
+
+  # ── SERVICIO ETL ─────────────────────────────────────────────
+  etl:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.etl
+    container_name: ep3_etl
+    env_file: .env
+    environment:
+      - CSV_PATH=/data/accidentes_limpios.csv
+      - SQLITE_PATH=/data/accidentes_ep3.db
+    volumes:
+      - ./data:/data
+    networks:
+      - ep3_net
+    restart: "no"
+
+  # ── SERVICIO API ─────────────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.api
+    container_name: ep3_api
+    env_file: .env
+    environment:
+      - SQLITE_PATH=/data/accidentes_ep3.db
+      - CSV_PATH=/data/accidentes_limpios.csv
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/data
+    depends_on:
+      - etl
+    networks:
+      - ep3_net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ── SERVICIO DASHBOARD ────────────────────────────────────────
+  dashboard:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dashboard
+    container_name: ep3_dashboard
+    env_file: .env
+    environment:
+      - SQLITE_PATH=/data/accidentes_ep3.db
+      - CSV_PATH=/data/accidentes_limpios.csv
+      - DASH_PORT=8050
+    ports:
+      - "8050:8050"
+    volumes:
+      - ./data:/data
+    depends_on:
+      - etl
+    networks:
+      - ep3_net
+    restart: unless-stopped
+
+networks:
+  ep3_net:
+    driver: bridge
+
+volumes:
+  data:

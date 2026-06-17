@@ -1,0 +1,23 @@
+# docker/Dockerfile.etl
+# Servicio ETL - Pipeline de integracion de 3 fuentes de datos
+# SCY1101 EP3 | Accidentes de Trafico Espana 2024
+
+FROM python:3.11-slim
+
+LABEL maintainer="SCY1101-EP3"
+LABEL description="Pipeline ETL: CSV + Open-Meteo API + SQLite"
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY etl/ ./etl/
+
+RUN mkdir -p /data
+
+ENV CSV_PATH=/data/accidentes_limpios.csv
+ENV SQLITE_PATH=/data/accidentes_ep3.db
+ENV OPENMETEO_URL=https://archive-api.open-meteo.com/v1/archive
+
+CMD ["python", "etl/pipeline.py"]

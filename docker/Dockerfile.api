@@ -1,0 +1,26 @@
+# docker/Dockerfile.api
+# Servicio API RESTful — FastAPI
+# SCY1101 EP3 | Accidentes de Tráfico España 2024
+
+FROM python:3.11-slim
+
+LABEL maintainer="SCY1101-EP3"
+LABEL description="API RESTful FastAPI con documentación automática en /docs"
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY api/ ./api/
+COPY etl/ ./etl/
+
+RUN mkdir -p /data
+
+ENV SQLITE_PATH=/data/accidentes_ep3.db
+ENV CSV_PATH=/data/accidentes_limpios.csv
+ENV API_PORT=8000
+
+EXPOSE 8000
+
+CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]
