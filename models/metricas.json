@@ -1,0 +1,71 @@
+{
+  "clasificacion": {
+    "tipo": "clasificacion",
+    "mejor_modelo": "DecisionTree",
+    "resultados": {
+      "DecisionTree": {
+        "accuracy": 0.6508,
+        "precision": 0.3877,
+        "recall": 0.589,
+        "f1": 0.3691
+      },
+      "RandomForest": {
+        "accuracy": 0.8936,
+        "precision": 0.3652,
+        "recall": 0.3507,
+        "f1": 0.354
+      }
+    },
+    "matriz_confusion": [
+      [
+        12492,
+        3521,
+        2874
+      ],
+      [
+        409,
+        614,
+        209
+      ],
+      [
+        55,
+        55,
+        170
+      ]
+    ],
+    "importancia_variables": {
+      "TRAZADO_PLANTA": 0.3566,
+      "TOTAL_VEHICULOS": 0.3302,
+      "TIPO_ACCIDENTE": 0.2366,
+      "HORA": 0.0285,
+      "CONDICION_FIRME": 0.0206,
+      "TIPO_VIA": 0.0174,
+      "CONDICION_METEO": 0.0065,
+      "CONDICION_ILUMINACION": 0.0037,
+      "MES": 0.0,
+      "DIA_SEMANA": 0.0,
+      "HAY_NIEBLA": 0.0
+    },
+    "mejores_hiperparametros": {
+      "criterion": "entropy",
+      "max_depth": 5,
+      "min_samples_split": 2
+    }
+  },
+  "regresion": {
+    "tipo": "regresion",
+    "mejor_modelo": "RandomForestRegressor",
+    "resultados": {
+      "LinearRegression": {
+        "mae": 0.4749,
+        "rmse": 0.7979,
+        "r2": 0.1079
+      },
+      "RandomForestRegressor": {
+        "mae": 0.4585,
+        "rmse": 0.7848,
+        "r2": 0.137
+      }
+    }
+  }
+}
