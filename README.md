@@ -1,5 +1,5 @@
 #  Sistema de Análisis de Accidentalidad Vial — España 2024
-### Evaluación Parcial N°3 — SCY1101 Programación para la Ciencia de Datos
+### Evaluación Parcial N°3 — SCY1101 ProgramacionCienciaDeDatos
 **Docente:** Mauricio González V. | **Duoc UC 2025**
 
 ---
