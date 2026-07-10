@@ -1,0 +1,23 @@
+# docker/Dockerfile.models
+# Servicio de Machine Learning - Entrenamiento de modelos
+# SCY1101 EFT | Accidentes de Trafico Espana 2024
+
+FROM python:3.11-slim
+
+LABEL maintainer="SCY1101-EFT"
+LABEL description="Entrenamiento de modelos ML: clasificacion y regresion"
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY models/ ./models/
+COPY etl/ ./etl/
+
+RUN mkdir -p /data
+
+ENV CSV_PATH=/data/accidentes_limpios.csv
+ENV MODELS_DIR=/app/models
+
+CMD ["python", "models/train_models.py"]

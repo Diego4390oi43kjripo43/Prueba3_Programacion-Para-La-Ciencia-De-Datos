@@ -1,0 +1,37 @@
+# ci.yml - Integracion Continua (CI/CD)
+# Examen Final Transversal (EFT) | SCY1101
+# Ejecuta automaticamente los tests cada vez que se sube codigo a GitHub
+
+name: CI - Tests Automatizados
+
+on:
+  push:
+    branches: [ main, Diego, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar el codigo del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Ejecutar tests con pytest
+        run: |
+          pytest tests/ -v
+
+      - name: Verificar que el pipeline ETL importa sin errores
+        run: |
+          python -c "from etl import pipeline; print('Pipeline OK')"

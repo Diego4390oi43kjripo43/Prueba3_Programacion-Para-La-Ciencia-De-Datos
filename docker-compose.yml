@@ -1,8 +1,6 @@
-version: '3.9'
-
-# docker-compose.yml — Orquestación completa del sistema
-# SCY1101 EP3 | Accidentes de Tráfico España 2024
-# Servicios: etl | api | dashboard
+# docker-compose.yml - Orquestacion completa del sistema
+# SCY1101 EFT | Accidentes de Trafico Espana 2024
+# Servicios: etl | models | api | dashboard
 #
 # Uso:
 #   1. Copiar accidentes_limpios.csv en ./data/
@@ -12,7 +10,7 @@ version: '3.9'
 
 services:
 
-  # ── SERVICIO ETL ─────────────────────────────────────────────
+  # -- SERVICIO ETL --
   etl:
     build:
       context: .
@@ -28,7 +26,26 @@ services:
       - ep3_net
     restart: "no"
 
-  # ── SERVICIO API ─────────────────────────────────────────────
+  # -- SERVICIO ML (entrena modelos) --
+  models:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.models
+    container_name: ep3_models
+    env_file: .env
+    environment:
+      - CSV_PATH=/data/accidentes_limpios.csv
+      - MODELS_DIR=/app/models
+    volumes:
+      - ./data:/data
+      - ./models:/app/models
+    depends_on:
+      - etl
+    networks:
+      - ep3_net
+    restart: "no"
+
+  # -- SERVICIO API --
   api:
     build:
       context: .
@@ -42,18 +59,14 @@ services:
       - "8000:8000"
     volumes:
       - ./data:/data
+      - ./models:/app/models
     depends_on:
-      - etl
+      - models
     networks:
       - ep3_net
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
 
-  # ── SERVICIO DASHBOARD ────────────────────────────────────────
+  # -- SERVICIO DASHBOARD --
   dashboard:
     build:
       context: .
